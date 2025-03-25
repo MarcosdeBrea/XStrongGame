@@ -10,9 +10,10 @@
         font-family: Arial, sans-serif;
         background-color: #111111;
         color: #ffffff;
-        background-size: cover;
+        /* Ubicamos el fondo al centro de la pantalla */
+        background-position: center center;
         background-repeat: no-repeat;
-        background-position: center;
+        background-size: cover;
       }
       header {
         background-color: #000000;
@@ -45,10 +46,12 @@
         cursor: pointer;
         margin-left: 10px;
       }
+
+      /* Contenedor principal, centrado */
       .container {
         margin: 20px auto;
         max-width: 1200px;
-        text-align: center; /* Para centrar el contenido de forma más visual */
+        text-align: center;
       }
       .section-title {
         font-size: 24px;
@@ -68,7 +71,8 @@
       .hidden {
         display: none;
       }
-      /* Estilos genéricos de tablas */
+
+      /* Tablas */
       table {
         width: 100%;
         border-collapse: collapse;
@@ -84,7 +88,7 @@
         border-bottom: 1px solid #444444;
         padding: 10px;
       }
-      /* Botones y layout interno */
+
       .back-button {
         background-color: #333333;
         border: 1px solid red;
@@ -93,6 +97,7 @@
         cursor: pointer;
         margin-bottom: 20px;
       }
+
       /* Responsive */
       @media (max-width: 768px) {
         .section-title {
@@ -103,6 +108,7 @@
           margin: 10px auto;
         }
       }
+
       /* Panel de administración */
       .admin-container {
         background-color: #222222;
@@ -143,67 +149,58 @@
       <p>Aquí puedes ver la información de la competición</p>
       <button class="button-large" onclick="goToSchedule()">Ver Horario</button>
       <button class="button-large" onclick="goToRanking()">Ver Ranking</button>
+      <button class="button-large" onclick="participarSorteo()">Sorteo / Votación</button>
     </div>
 
     <!-- SCHEDULE SECTION -->
     <div class="container hidden" id="scheduleSection">
       <button class="back-button" onclick="goHome()">&larr; Volver</button>
       <h2 class="section-title">Horarios de Salida</h2>
-      <p>
-        <strong>Heat 1:</strong> 09:00 AM - Atletas 1001 a 1020<br />
-        <strong>Heat 2:</strong> 09:30 AM - Atletas 1021 a 1040<br />
-        <strong>Heat 3:</strong> 10:00 AM - Atletas 1041 a 1060
-      </p>
+      <div id="scheduleList">
+        <p>No hay atletas cargados todavía.</p>
+      </div>
     </div>
 
     <!-- RANKING SECTION -->
     <div class="container hidden" id="rankingSection">
       <button class="back-button" onclick="goHome()">&larr; Volver</button>
-      <h2 class="section-title">Ranking General (Individual)</h2>
-      <p>Clasificación general de los participantes (individuales).</p>
+
+      <!-- Ranking General Masculino -->
+      <h2 class="section-title">Ranking General Masculino (Individual)</h2>
       <table>
         <thead>
           <tr>
             <th>Pos</th>
             <th>Bib</th>
             <th>Nombre</th>
-            <th>Sexo</th>
-            <th>Rango Edad</th>
-            <th>Tiempo Neto</th>
-            <th>Dif.</th>
-            <th>Pace</th>
+            <th>Edad</th>
+            <th>Rango</th>
+            <th>Tiempo</th>
             <th>Detalle</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Datos de ejemplo -->
-          <tr>
-            <td>1</td>
-            <td>1001</td>
-            <td>Juan Pérez</td>
-            <td>M</td>
-            <td>30-39</td>
-            <td>00:58:12</td>
-            <td>+0:00</td>
-            <td>6:00</td>
-            <td><button onclick="showAthleteDetail('1001')">Ver</button></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>1002</td>
-            <td>Ana García</td>
-            <td>F</td>
-            <td>20-29</td>
-            <td>01:05:47</td>
-            <td>+7:35</td>
-            <td>6:45</td>
-            <td><button onclick="showAthleteDetail('1002')">Ver</button></td>
-          </tr>
-        </tbody>
+        <tbody id="rankingMenBody"></tbody>
       </table>
 
-      <h2 class="section-title">Ranking por Edades</h2>
-      <p>Clasificación ordenada por rango de edad (bloques de 10 años).</p>
+      <!-- Ranking General Femenino -->
+      <h2 class="section-title">Ranking General Femenino (Individual)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Bib</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Rango</th>
+            <th>Tiempo</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody id="rankingWomenBody"></tbody>
+      </table>
+
+      <!-- Ranking por Edades Masculino -->
+      <h2 class="section-title">Ranking Edades Masculino</h2>
       <table>
         <thead>
           <tr>
@@ -212,103 +209,82 @@
             <th>Nombre</th>
             <th>Rango Edad</th>
             <th>Tiempo</th>
-            <th>Categoría</th>
+            <th>Detalle</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>1001</td>
-            <td>Juan Pérez</td>
-            <td>30-39</td>
-            <td>00:58:12</td>
-            <td>Men</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>1002</td>
-            <td>Ana García</td>
-            <td>20-29</td>
-            <td>01:05:47</td>
-            <td>Women</td>
-          </tr>
-        </tbody>
+        <tbody id="rankingAgeMenBody"></tbody>
       </table>
 
+      <!-- Ranking por Edades Femenino -->
+      <h2 class="section-title">Ranking Edades Femenino</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Bib</th>
+            <th>Nombre</th>
+            <th>Rango Edad</th>
+            <th>Tiempo</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody id="rankingAgeWomenBody"></tbody>
+      </table>
+
+      <!-- Ranking Parejas Men -->
       <h2 class="section-title">Ranking Parejas Men</h2>
-      <p>Parejas masculinas.</p>
       <table>
         <thead>
           <tr>
             <th>Pos</th>
-            <th>Nombres</th>
-            <th>Rango Edad P1</th>
-            <th>Rango Edad P2</th>
+            <th>Bib</th>
+            <th>Nombre 1</th>
+            <th>Rango1</th>
+            <th>Nombre 2</th>
+            <th>Rango2</th>
             <th>Tiempo</th>
+            <th>Detalle</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Carlos & Pedro</td>
-            <td>30-39</td>
-            <td>40-49</td>
-            <td>01:10:30</td>
-          </tr>
-        </tbody>
+        <tbody id="pairsMenBody"></tbody>
       </table>
 
+      <!-- Ranking Parejas Women -->
       <h2 class="section-title">Ranking Parejas Women</h2>
-      <p>Parejas femeninas.</p>
       <table>
         <thead>
           <tr>
             <th>Pos</th>
-            <th>Nombres</th>
-            <th>Rango Edad P1</th>
-            <th>Rango Edad P2</th>
+            <th>Bib</th>
+            <th>Nombre 1</th>
+            <th>Rango1</th>
+            <th>Nombre 2</th>
+            <th>Rango2</th>
             <th>Tiempo</th>
+            <th>Detalle</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>María & Julia</td>
-            <td>20-29</td>
-            <td>30-39</td>
-            <td>01:15:00</td>
-          </tr>
-        </tbody>
+        <tbody id="pairsWomenBody"></tbody>
       </table>
 
+      <!-- Ranking Parejas Mixto -->
       <h2 class="section-title">Ranking Parejas Mixto</h2>
-      <p>Parejas mixtas.</p>
       <table>
         <thead>
           <tr>
             <th>Pos</th>
-            <th>Nombres</th>
-            <th>Rango Edad P1</th>
-            <th>Rango Edad P2</th>
+            <th>Bib</th>
+            <th>Nombre 1</th>
+            <th>Rango1</th>
+            <th>Nombre 2</th>
+            <th>Rango2</th>
             <th>Tiempo</th>
+            <th>Detalle</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Pedro & Laura</td>
-            <td>30-39</td>
-            <td>20-29</td>
-            <td>01:02:30</td>
-          </tr>
-        </tbody>
+        <tbody id="pairsMixBody"></tbody>
       </table>
 
-      <div style="margin-top: 30px; background-color: #222222; padding: 10px;">
-        <h3>Sorteo / Votación</h3>
-        <p>Participa en la votación y entrarás en el sorteo.</p>
-        <button onclick="participarSorteo()">Participar</button>
-      </div>
     </div>
 
     <!-- DETAIL SECTION -->
@@ -324,8 +300,7 @@
             <th>Tiempo</th>
           </tr>
         </thead>
-        <tbody id="detailTableBody">
-        </tbody>
+        <tbody id="detailTableBody"></tbody>
       </table>
     </div>
 
@@ -347,39 +322,71 @@
           <option value="parejas">Parejas</option>
         </select>
         <br />
+
+        <!-- INDIVIDUAL FORM -->
         <div id="individualForm">
-          <label for="individualName">Nombre:</label>
-          <input type="text" id="individualName" /><br />
-          <label for="individualAge">Edad:</label>
-          <input type="number" id="individualAge" /><br />
-          <label for="genderSelect">Género:</label>
+          <label>Nombre:</label>
+          <input type="text" id="individualName" placeholder="Nombre" /><br />
+
+          <label>Edad:</label>
+          <input type="number" id="individualAge" placeholder="Edad" /><br />
+
+          <label>Género:</label>
           <select id="genderSelect">
             <option value="men">Men</option>
             <option value="women">Women</option>
           </select><br />
+
+          <label>Bib:</label>
+          <input type="text" id="individualBib" placeholder="Número de dorsal" /><br />
+
+          <label>Tiempo (hh:mm:ss):</label>
+          <input type="text" id="individualTime" placeholder="00:00:00" /><br />
+
+          <label>Horario (ej: Heat 1):</label>
+          <input type="text" id="individualHeat" placeholder="Heat" /><br />
+
           <button class="submit-button" onclick="addIndividual()">Añadir Individual</button>
         </div>
+
+        <!-- PAREJAS FORM -->
         <div id="parejasForm" class="hidden">
-          <label for="pareja1Name">Nombre Persona 1:</label>
+          <label>Bib Pareja:</label>
+          <input type="text" id="parejaBib" placeholder="Número de dorsal" /><br />
+
+          <label>Nombre Persona 1:</label>
           <input type="text" id="pareja1Name" /><br />
-          <label for="pareja1Age">Edad Persona 1:</label>
+          <label>Edad Persona 1:</label>
           <input type="number" id="pareja1Age" /><br />
-          <label for="pareja2Name">Nombre Persona 2:</label>
+
+          <label>Nombre Persona 2:</label>
           <input type="text" id="pareja2Name" /><br />
-          <label for="pareja2Age">Edad Persona 2:</label>
+          <label>Edad Persona 2:</label>
           <input type="number" id="pareja2Age" /><br />
-          <label for="genderPairSelect">Género Parejas:</label>
+
+          <label>Categoría Parejas:</label>
           <select id="genderPairSelect">
             <option value="men">Parejas Men</option>
             <option value="women">Parejas Women</option>
             <option value="mixto">Parejas Mixto</option>
           </select><br />
+
+          <label>Tiempo (hh:mm:ss):</label>
+          <input type="text" id="parejaTime" placeholder="00:00:00" /><br />
+
+          <label>Horario (ej: Heat 2):</label>
+          <input type="text" id="parejaHeat" placeholder="Heat" /><br />
+
           <button class="submit-button" onclick="addPareja()">Añadir Pareja</button>
         </div>
       </div>
     </div>
 
     <script>
+      // Arrays para almacenar la información
+      let individuals = [];
+      let pairs = [];
+
       let isAdminLoggedIn = false;
       const adminUsername = "Xone";
       const adminPassword = "XStrong";
@@ -439,35 +446,276 @@
 
       function addIndividual() {
         const name = document.getElementById("individualName").value;
-        const age = document.getElementById("individualAge").value;
-        const gender = document.getElementById("genderSelect").value;
+        const age = parseInt(document.getElementById("individualAge").value) || 0;
+        const gender = document.getElementById("genderSelect").value; // men | women
+        const bib = document.getElementById("individualBib").value;
+        const time = document.getElementById("individualTime").value;
+        const heat = document.getElementById("individualHeat").value;
         const rango = calcularRangoEdad(age);
 
-        alert(`Atleta Individual añadido: ${name}, ${gender}, Rango: ${rango}`);
+        const newAthlete = {
+          bib,
+          name,
+          age,
+          gender,
+          rango,
+          time,
+          heat,
+        };
+
+        individuals.push(newAthlete);
+        alert(`Atleta Individual añadido: ${name} (${gender}), Rango: ${rango}`);
+
+        // Limpiar
         document.getElementById("individualName").value = "";
         document.getElementById("individualAge").value = "";
+        document.getElementById("individualBib").value = "";
+        document.getElementById("individualTime").value = "";
+        document.getElementById("individualHeat").value = "";
+
+        refreshAll();
       }
 
       function addPareja() {
+        const bib = document.getElementById("parejaBib").value;
         const name1 = document.getElementById("pareja1Name").value;
-        const age1 = document.getElementById("pareja1Age").value;
+        const age1 = parseInt(document.getElementById("pareja1Age").value) || 0;
         const name2 = document.getElementById("pareja2Name").value;
-        const age2 = document.getElementById("pareja2Age").value;
-        const genderPair = document.getElementById("genderPairSelect").value;
+        const age2 = parseInt(document.getElementById("pareja2Age").value) || 0;
+        const pairCat = document.getElementById("genderPairSelect").value; // men | women | mixto
+        const time = document.getElementById("parejaTime").value;
+        const heat = document.getElementById("parejaHeat").value;
 
         const rango1 = calcularRangoEdad(age1);
         const rango2 = calcularRangoEdad(age2);
 
-        alert(`Pareja añadida: ${name1} & ${name2}, ${genderPair}, Rangos: ${rango1} y ${rango2}`);
+        const newPair = {
+          bib,
+          name1,
+          age1,
+          rango1,
+          name2,
+          age2,
+          rango2,
+          pairCat,
+          time,
+          heat,
+        };
+
+        pairs.push(newPair);
+        alert(`Pareja añadida: ${name1} & ${name2}, ${pairCat}, Rangos: ${rango1} y ${rango2}`);
+
+        // Limpiar
+        document.getElementById("parejaBib").value = "";
         document.getElementById("pareja1Name").value = "";
         document.getElementById("pareja1Age").value = "";
         document.getElementById("pareja2Name").value = "";
         document.getElementById("pareja2Age").value = "";
+        document.getElementById("parejaTime").value = "";
+        document.getElementById("parejaHeat").value = "";
+
+        refreshAll();
       }
 
       function calcularRangoEdad(age) {
         const base = Math.floor(age / 10) * 10;
         return `${base}-${base + 9}`;
+      }
+
+      // Actualiza los listados de Horarios y Rankings
+      function refreshAll() {
+        refreshSchedule();
+        refreshRankings();
+      }
+
+      function refreshSchedule() {
+        const scheduleDiv = document.getElementById("scheduleList");
+        if (individuals.length === 0 && pairs.length === 0) {
+          scheduleDiv.innerHTML = "<p>No hay atletas cargados todavía.</p>";
+          return;
+        }
+        // Mostramos todos por su heat
+        // Creamos un map: heat -> array de competidores
+        const scheduleMap = {};
+        // Insertamos individuales
+        individuals.forEach((ind) => {
+          if (!scheduleMap[ind.heat]) {
+            scheduleMap[ind.heat] = [];
+          }
+          scheduleMap[ind.heat].push(`${ind.bib} - ${ind.name} (${ind.gender})`);
+        });
+        // Insertamos parejas
+        pairs.forEach((p) => {
+          if (!scheduleMap[p.heat]) {
+            scheduleMap[p.heat] = [];
+          }
+          scheduleMap[p.heat].push(
+            `${p.bib} - ${p.name1} & ${p.name2} (${p.pairCat})`
+          );
+        });
+
+        let html = "";
+        for (const heatKey of Object.keys(scheduleMap)) {
+          if (!heatKey || heatKey.trim() === "") {
+            continue;
+          }
+          html += `<h3>${heatKey}</h3><ul>`;
+          scheduleMap[heatKey].forEach((line) => {
+            html += `<li>${line}</li>`;
+          });
+          html += "</ul>";
+        }
+        scheduleDiv.innerHTML = html;
+      }
+
+      function refreshRankings() {
+        // Limpiamos los tbodies
+        document.getElementById("rankingMenBody").innerHTML = "";
+        document.getElementById("rankingWomenBody").innerHTML = "";
+        document.getElementById("rankingAgeMenBody").innerHTML = "";
+        document.getElementById("rankingAgeWomenBody").innerHTML = "";
+        document.getElementById("pairsMenBody").innerHTML = "";
+        document.getElementById("pairsWomenBody").innerHTML = "";
+        document.getElementById("pairsMixBody").innerHTML = "";
+
+        // Ordenamos por tiempo con una función auxiliar (simple, as string)
+        function timeToSeconds(t) {
+          if (!t) return 9999999;
+          const parts = t.split(":");
+          if (parts.length !== 3) return 9999999;
+          const [hh, mm, ss] = parts.map(Number);
+          return hh * 3600 + mm * 60 + ss;
+        }
+        // Sort individuals by time
+        // (Igual para pairs)
+
+        // Ranking men
+        const men = individuals.filter((i) => i.gender === "men").sort((a, b) => {
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        men.forEach((ath, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${ath.bib || ""}</td>
+            <td>${ath.name}</td>
+            <td>${ath.age}</td>
+            <td>${ath.rango}</td>
+            <td>${ath.time || ""}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("rankingMenBody").appendChild(row);
+        });
+
+        // Ranking women
+        const women = individuals.filter((i) => i.gender === "women").sort((a, b) => {
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        women.forEach((ath, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${ath.bib || ""}</td>
+            <td>${ath.name}</td>
+            <td>${ath.age}</td>
+            <td>${ath.rango}</td>
+            <td>${ath.time || ""}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("rankingWomenBody").appendChild(row);
+        });
+
+        // Ranking edad men
+        const menAges = [...men].sort((a, b) => {
+          // Podríamos agrupar por rango, pero aquí sólo ordenamos por time
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        menAges.forEach((ath, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${ath.bib}</td>
+            <td>${ath.name}</td>
+            <td>${ath.rango}</td>
+            <td>${ath.time}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("rankingAgeMenBody").appendChild(row);
+        });
+
+        // Ranking edad women
+        const womenAges = [...women].sort((a, b) => {
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        womenAges.forEach((ath, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${ath.bib}</td>
+            <td>${ath.name}</td>
+            <td>${ath.rango}</td>
+            <td>${ath.time}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("rankingAgeWomenBody").appendChild(row);
+        });
+
+        // Pairs men
+        const menPairs = pairs.filter((p) => p.pairCat === "men").sort((a, b) => {
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        menPairs.forEach((p, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${p.bib}</td>
+            <td>${p.name1}</td>
+            <td>${p.rango1}</td>
+            <td>${p.name2}</td>
+            <td>${p.rango2}</td>
+            <td>${p.time}</td>
+            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("pairsMenBody").appendChild(row);
+        });
+
+        // Pairs women
+        const womenPairs = pairs.filter((p) => p.pairCat === "women").sort((a, b) => {
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        womenPairs.forEach((p, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${p.bib}</td>
+            <td>${p.name1}</td>
+            <td>${p.rango1}</td>
+            <td>${p.name2}</td>
+            <td>${p.rango2}</td>
+            <td>${p.time}</td>
+            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("pairsWomenBody").appendChild(row);
+        });
+
+        // Pairs mix
+        const mixPairs = pairs.filter((p) => p.pairCat === "mixto").sort((a, b) => {
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        mixPairs.forEach((p, idx) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${p.bib}</td>
+            <td>${p.name1}</td>
+            <td>${p.rango1}</td>
+            <td>${p.name2}</td>
+            <td>${p.rango2}</td>
+            <td>${p.time}</td>
+            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>
+          `;
+          document.getElementById("pairsMixBody").appendChild(row);
+        });
       }
 
       // Navegación
@@ -484,6 +732,7 @@
       function goToRanking() {
         hideAll();
         document.getElementById("rankingSection").classList.remove("hidden");
+        refreshRankings();
       }
 
       function hideAll() {
@@ -498,36 +747,60 @@
         hideAll();
         document.getElementById("detailSection").classList.remove("hidden");
 
-        document.getElementById("detailHeader").textContent = `Detalle del Atleta BIB: ${bib}`;
+        const detailHeader = document.getElementById("detailHeader");
         const detailTableBody = document.getElementById("detailTableBody");
         detailTableBody.innerHTML = "";
-        // Ejemplo de splits
-        const splits = [
-          { segment: "Salida - 1km", time: "05:00" },
-          { segment: "1km - 2km", time: "05:12" },
-          { segment: "2km - 3km", time: "05:15" },
-          { segment: "3km - 4km", time: "05:20" },
-          { segment: "4km - Meta", time: "05:25" },
-        ];
-        splits.forEach((s) => {
-          const tr = document.createElement("tr");
-          const tdSeg = document.createElement("td");
-          tdSeg.textContent = s.segment;
-          const tdTime = document.createElement("td");
-          tdTime.textContent = s.time;
-          tr.appendChild(tdSeg);
-          tr.appendChild(tdTime);
-          detailTableBody.appendChild(tr);
-        });
-      }
 
-      function goToRanking() {
-        hideAll();
-        document.getElementById("rankingSection").classList.remove("hidden");
+        // Buscamos al athlete o pair segun su bib
+        let found = individuals.find((x) => x.bib === bib);
+        let isPair = false;
+        if (!found) {
+          found = pairs.find((x) => x.bib === bib);
+          isPair = !!found;
+        }
+        if (!found) {
+          detailHeader.textContent = `No se encontró el BIB ${bib}`;
+          return;
+        }
+
+        if (!isPair) {
+          // es un individual
+          detailHeader.textContent = `Detalle del Atleta BIB: ${found.bib} - ${found.name}`;
+          // Podríamos mostrar splits o algo adicional
+          // De momento, mostramos un dummy
+          const splits = [
+            { segment: "Salida - 1km", time: "05:00" },
+            { segment: "1km - 2km", time: "05:10" },
+            { segment: "2km - 3km", time: "05:20" },
+            { segment: "3km - 4km", time: "05:25" },
+            { segment: "4km - Meta", time: "05:30" },
+          ];
+          splits.forEach((s) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${s.segment}</td><td>${s.time}</td>`;
+            detailTableBody.appendChild(tr);
+          });
+        } else {
+          // es una pareja
+          detailHeader.textContent = `Detalle de la Pareja BIB: ${found.bib} - ${found.name1} & ${found.name2}`;
+          // Splits dummy
+          const splits = [
+            { segment: "Salida - 1km", time: "06:00" },
+            { segment: "1km - 2km", time: "06:15" },
+            { segment: "2km - 3km", time: "06:25" },
+            { segment: "3km - 4km", time: "06:30" },
+            { segment: "4km - Meta", time: "06:45" },
+          ];
+          splits.forEach((s) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${s.segment}</td><td>${s.time}</td>`;
+            detailTableBody.appendChild(tr);
+          });
+        }
       }
 
       function participarSorteo() {
-        alert("Gracias por participar en el sorteo.");
+        alert("Gracias por participar en la votación/sorteo.");
       }
     </script>
   </body>
