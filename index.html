@@ -1,1 +1,367 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XTrong Games</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body class="bg-zinc-900 text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const App = () => {
+      const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+      const [showAdminLogin, setShowAdminLogin] = React.useState(false);
+      const [athletes, setAthletes] = React.useState([]);
+      // Estado para el fondo de la vista pública (si se establece, se usa en PublicView)
+      const [publicBg, setPublicBg] = React.useState('');
+
+      // Credenciales de administrador
+      const ADMIN_USER = 'Xone';
+      const ADMIN_PASS = 'XStrong';
+
+      // Función para agregar participantes (individual o parejas)
+      const addAthlete = (newAthlete) => {
+        setAthletes([...athletes, newAthlete]);
+      };
+
+      // Función para determinar el rango de edad a partir de la edad ingresada (solo para individuales)
+      const getAgeRange = (age) => {
+        const numericAge = Number(age);
+        if (numericAge < 18) return "Sub-18";
+        else if (numericAge <= 25) return "18-25";
+        else if (numericAge <= 35) return "26-35";
+        else return "36+";
+      };
+
+      // Modal de Login para el administrador
+      const AdminLoginModal = () => {
+        const [username, setUsername] = React.useState('');
+        const [password, setPassword] = React.useState('');
+
+        const handleLogin = (e) => {
+          e.preventDefault();
+          if (username === ADMIN_USER && password === ADMIN_PASS) {
+            setIsLoggedIn(true);
+            setShowAdminLogin(false);
+          } else {
+            alert('Credenciales incorrectas');
+          }
+        };
+
+        return (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-zinc-800 p-8 rounded-lg shadow-xl w-96">
+              <h2 className="text-2xl mb-6 text-center">Acceso Administrador</h2>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <input 
+                  type="text" 
+                  placeholder="Usuario"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full p-2 bg-zinc-700 rounded"
+                />
+                <input 
+                  type="password" 
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-2 bg-zinc-700 rounded"
+                />
+                <button 
+                  type="submit" 
+                  className="w-full bg-red-600 p-2 rounded hover:bg-red-700"
+                >
+                  Iniciar Sesión
+                </button>
+              </form>
+              <button 
+                className="mt-4 text-gray-300 hover:underline"
+                onClick={() => setShowAdminLogin(false)}
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        );
+      };
+
+      // Panel de Administración para añadir participantes y configurar fondo de la vista pública
+      const AdminComponent = ({ setPublicBg }) => {
+        const [registrationMode, setRegistrationMode] = React.useState('');
+        // Estados para participantes individuales
+        const [individualName, setIndividualName] = React.useState('');
+        const [individualAge, setIndividualAge] = React.useState('');
+        // Estados para parejas
+        const [pairType, setPairType] = React.useState(''); // 'men', 'women' o 'mixed'
+        const [pairAthlete1Name, setPairAthlete1Name] = React.useState('');
+        const [pairAthlete1Age, setPairAthlete1Age] = React.useState('');
+        const [pairAthlete2Name, setPairAthlete2Name] = React.useState('');
+        const [pairAthlete2Age, setPairAthlete2Age] = React.useState('');
+        // Estado para el fondo de pantalla en la vista pública
+        const [bgUrl, setBgUrl] = React.useState('');
+
+        // Agregar participante individual
+        const handleAddIndividual = () => {
+          if (!individualName || !individualAge) {
+            alert("Complete nombre y edad.");
+            return;
+          }
+          const newIndividual = {
+            participationType: 'Individual',
+            individualType: registrationMode === 'individualMen' ? 'men' : 'women',
+            name: individualName,
+            age: individualAge, // No se muestra al público
+            category: getAgeRange(individualAge)
+          };
+          addAthlete(newIndividual);
+          setIndividualName('');
+          setIndividualAge('');
+        };
+
+        // Agregar pareja
+        const handleAddPair = () => {
+          if (!pairType || !pairAthlete1Name || !pairAthlete1Age || !pairAthlete2Name || !pairAthlete2Age) {
+            alert("Complete todos los campos para la pareja.");
+            return;
+          }
+          const newPair = {
+            participationType: 'Pareja',
+            pairType,
+            athlete1: { name: pairAthlete1Name, age: pairAthlete1Age },
+            athlete2: { name: pairAthlete2Name, age: pairAthlete2Age },
+            category: `Pareja ${ pairType === 'men' ? 'Masculina' : pairType === 'women' ? 'Femenina' : 'Mixta' }`
+          };
+          addAthlete(newPair);
+          setPairType('');
+          setPairAthlete1Name('');
+          setPairAthlete1Age('');
+          setPairAthlete2Name('');
+          setPairAthlete2Age('');
+        };
+
+        return (
+          <div className="bg-zinc-800 p-6 rounded-lg mb-4 mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl text-red-500">Panel de Administración</h2>
+              {/* Botón para salir del panel de administrador */}
+              <button 
+                className="bg-red-600 p-2 rounded hover:bg-red-700"
+                onClick={() => setIsLoggedIn(false)}
+              >
+                Salir
+              </button>
+            </div>
+            {/* Configuración del fondo para la vista pública */}
+            <div className="mb-6 border p-4 rounded">
+              <h3 className="text-xl mb-2">Fondo de la vista pública</h3>
+              <input 
+                type="text"
+                placeholder="URL del fondo (imagen)"
+                value={bgUrl}
+                onChange={(e) => setBgUrl(e.target.value)}
+                className="w-full p-2 bg-zinc-700 rounded mb-2"
+              />
+              <button 
+                onClick={() => setPublicBg(bgUrl)}
+                className="w-full bg-red-600 p-2 rounded hover:bg-red-700"
+              >
+                Aplicar Fondo
+              </button>
+            </div>
+            <div className="mb-4">
+              <select 
+                className="w-full bg-zinc-700 text-white p-2 rounded"
+                value={registrationMode}
+                onChange={(e) => setRegistrationMode(e.target.value)}
+              >
+                <option value="">Seleccionar Tipo de Participación</option>
+                <option value="individualMen">Individual Hombres</option>
+                <option value="individualWomen">Individual Mujeres</option>
+                <option value="pareja">Pareja</option>
+              </select>
+            </div>
+            {registrationMode === 'individualMen' || registrationMode === 'individualWomen' ? (
+              <div className="space-y-4">
+                <input 
+                  type="text"
+                  placeholder="Nombre"
+                  value={individualName}
+                  onChange={(e) => setIndividualName(e.target.value)}
+                  className="w-full p-2 bg-zinc-700 rounded"
+                />
+                <input 
+                  type="number"
+                  placeholder="Edad"
+                  value={individualAge}
+                  onChange={(e) => setIndividualAge(e.target.value)}
+                  className="w-full p-2 bg-zinc-700 rounded"
+                />
+                <button 
+                  onClick={handleAddIndividual}
+                  className="w-full bg-red-600 p-2 rounded hover:bg-red-700"
+                >
+                  Añadir Individual
+                </button>
+              </div>
+            ) : registrationMode === 'pareja' ? (
+              <div className="space-y-4">
+                <select 
+                  className="w-full bg-zinc-700 text-white p-2 rounded"
+                  value={pairType}
+                  onChange={(e) => setPairType(e.target.value)}
+                >
+                  <option value="">Seleccionar Tipo de Pareja</option>
+                  <option value="men">Pareja Hombres</option>
+                  <option value="women">Pareja Mujeres</option>
+                  <option value="mixed">Pareja Mixta</option>
+                </select>
+                <div className="border p-2 rounded">
+                  <p className="mb-2 font-semibold">Atleta 1</p>
+                  <input 
+                    type="text"
+                    placeholder="Nombre"
+                    value={pairAthlete1Name}
+                    onChange={(e) => setPairAthlete1Name(e.target.value)}
+                    className="w-full p-2 bg-zinc-700 rounded mb-2"
+                  />
+                  <input 
+                    type="number"
+                    placeholder="Edad"
+                    value={pairAthlete1Age}
+                    onChange={(e) => setPairAthlete1Age(e.target.value)}
+                    className="w-full p-2 bg-zinc-700 rounded"
+                  />
+                </div>
+                <div className="border p-2 rounded">
+                  <p className="mb-2 font-semibold">Atleta 2</p>
+                  <input 
+                    type="text"
+                    placeholder="Nombre"
+                    value={pairAthlete2Name}
+                    onChange={(e) => setPairAthlete2Name(e.target.value)}
+                    className="w-full p-2 bg-zinc-700 rounded mb-2"
+                  />
+                  <input 
+                    type="number"
+                    placeholder="Edad"
+                    value={pairAthlete2Age}
+                    onChange={(e) => setPairAthlete2Age(e.target.value)}
+                    className="w-full p-2 bg-zinc-700 rounded"
+                  />
+                </div>
+                <button 
+                  onClick={handleAddPair}
+                  className="w-full bg-red-600 p-2 rounded hover:bg-red-700"
+                  disabled={!pairType}
+                >
+                  Añadir Pareja
+                </button>
+              </div>
+            ) : null}
+          </div>
+        );
+      };
+
+      // Vista pública: muestra horarios y rankings para todos
+      const PublicView = ({ publicBg }) => {
+        const [selectedView, setSelectedView] = React.useState('startTimes');
+
+        return (
+          // Se aplica el fondo si se ha configurado; si no, se mantiene el fondo por defecto
+          <div
+            style={{
+              backgroundImage: publicBg ? `url(${publicBg})` : '',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat'
+            }}
+            className="min-h-screen"
+          >
+            <header className="bg-zinc-800 p-4 flex flex-col items-center">
+              <h1 className="text-3xl text-center">
+                <span className="text-red-600">X</span>Strong Games
+              </h1>
+              <nav className="flex justify-center space-x-4 mt-4">
+                <button 
+                  onClick={() => setSelectedView('startTimes')}
+                  className={`p-2 rounded ${selectedView === 'startTimes' ? 'bg-red-600' : 'bg-zinc-700'}`}
+                >
+                  Horarios
+                </button>
+                <button 
+                  onClick={() => setSelectedView('rankings')}
+                  className={`p-2 rounded ${selectedView === 'rankings' ? 'bg-red-600' : 'bg-zinc-700'}`}
+                >
+                  Rankings
+                </button>
+              </nav>
+            </header>
+            <main className="container mx-auto p-4">
+              {selectedView === 'startTimes' && (
+                <div>
+                  <h2 className="text-2xl mb-4">Horarios de Salida</h2>
+                  {athletes.map((athlete, index) => (
+                    <div key={index} className="bg-zinc-800 p-4 mb-2 rounded">
+                      {athlete.participationType === 'Individual' ? (
+                        <>
+                          <p>{athlete.name}</p>
+                          <p className="text-red-500">
+                            { athlete.individualType === 'men' ? 'Individual Masculino' : 'Individual Femenino' } - Compite en: {athlete.category}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p>{athlete.athlete1.name} &amp; {athlete.athlete2.name}</p>
+                          <p className="text-red-500">{athlete.category}</p>
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {selectedView === 'rankings' && (
+                <div>
+                  <h2 className="text-2xl mb-4">Rankings</h2>
+                  {/* Aquí podrías mostrar el contenido de los rankings */}
+                </div>
+              )}
+            </main>
+          </div>
+        );
+      };
+
+      return (
+        <div>
+          {/* Botón para acceder al login del administrador (visible si no se ha iniciado sesión) */}
+          <div className="p-4 flex justify-end">
+            {!isLoggedIn && (
+              <button 
+                className="bg-red-600 p-2 rounded hover:bg-red-700"
+                onClick={() => setShowAdminLogin(true)}
+              >
+                Acceso Administrador
+              </button>
+            )}
+          </div>
+
+          {/* Panel de administración visible al administrador logueado */}
+          {isLoggedIn && <AdminComponent setPublicBg={setPublicBg} />}
+
+          {/* Vista pública accesible para todos, con el fondo configurado */}
+          <PublicView publicBg={publicBg} />
+
+          {/* Modal de login para el administrador */}
+          {showAdminLogin && <AdminLoginModal />}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
