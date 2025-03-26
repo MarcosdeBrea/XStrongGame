@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XTrong Games</title>
     <style>
+      /* Estilo general */
       body {
         margin: 0;
         font-family: Arial, sans-serif;
         background-color: #111111;
         color: #ffffff;
-        /* Ubicamos el fondo al centro de la pantalla */
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -20,92 +20,154 @@
         display: flex;
         align-items: center;
         padding: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.7);
       }
       .logo {
-        font-size: 24px;
+        font-size: 28px;
         font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
       .logo .x {
-        color: red; /* X en rojo */
+        color: red;
       }
       nav {
         margin-left: auto;
       }
-      .admin-button {
+      .admin-button, .logout-button {
         background-color: #333333;
         border: 1px solid red;
-        padding: 5px 10px;
+        padding: 8px 12px;
         color: #ffffff;
         cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+      }
+      .admin-button:hover, .logout-button:hover {
+        background-color: #555555;
       }
       .logout-button {
-        background-color: #333333;
-        border: 1px solid red;
-        padding: 5px 10px;
-        color: #ffffff;
-        cursor: pointer;
         margin-left: 10px;
       }
 
-      /* Contenedor principal, centrado */
       .container {
         margin: 20px auto;
         max-width: 1200px;
         text-align: center;
+        padding: 20px;
       }
       .section-title {
-        font-size: 24px;
-        margin-bottom: 10px;
+        font-size: 32px;
+        margin-bottom: 20px;
         margin-top: 20px;
         text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
       }
-      .button-large {
-        background-color: red;
-        color: #ffffff;
+      .hidden { display: none; }
+
+      /* BOTONES X (más grandes) */
+      .x-button {
+        position: relative;
+        display: inline-block;
+        width: 220px;  /* Aumentado */
+        height: 220px;
+        margin: 30px;
         border: none;
-        padding: 15px 25px;
-        margin: 10px;
-        font-size: 18px;
+        background: transparent;
         cursor: pointer;
+        transition: transform 0.3s;
       }
-      .hidden {
-        display: none;
+      .x-button:hover {
+        transform: scale(1.1);
+      }
+      .x-button .bar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 220px;  
+        height: 40px;  /* Barras más gruesas */
+        background-color: red;
+        transform-origin: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        transition: background-color 0.3s;
+      }
+      .x-button .bar1 {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      .x-button .bar2 {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+      .x-button:hover .bar {
+        background-color: #ff4d4d;
+      }
+      .button-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 20px;
+        text-transform: uppercase;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        pointer-events: none;
       }
 
-      /* Tablas */
       table {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.7);
       }
       table thead th {
         background-color: #222222;
         border-bottom: 2px solid red;
-        padding: 10px;
+        padding: 12px;
         text-align: left;
+        font-weight: 700;
+        text-transform: uppercase;
       }
       table tbody td {
         border-bottom: 1px solid #444444;
-        padding: 10px;
+        padding: 12px;
+      }
+      table tbody tr:hover {
+        background-color: rgba(255,255,255,0.05);
       }
 
       .back-button {
         background-color: #333333;
         border: 1px solid red;
         color: #ffffff;
-        padding: 5px 10px;
+        padding: 10px 20px;
         cursor: pointer;
         margin-bottom: 20px;
+        font-size: 16px;
+        text-transform: uppercase;
+        transition: background-color 0.3s;
+      }
+      .back-button:hover {
+        background-color: #555555;
       }
 
       /* Responsive */
       @media (max-width: 768px) {
         .section-title {
-          font-size: 20px;
+          font-size: 24px;
         }
-        .button-large {
-          width: 80%;
-          margin: 10px auto;
+        .x-button {
+          width: 150px;
+          height: 150px;
+          margin: 20px;
+        }
+        .x-button .bar {
+          width: 150px;
+          height: 30px;
+        }
+        .button-text {
+          font-size: 16px;
         }
       }
 
@@ -115,22 +177,61 @@
         padding: 10px;
         margin-top: 20px;
         text-align: left;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
       }
       .admin-container label {
         display: block;
         margin-bottom: 5px;
+        font-weight: 600;
       }
       .admin-container input,
       .admin-container select {
         margin-bottom: 10px;
-        width: 200px;
+        width: 220px;
+        padding: 5px;
+        border: 1px solid #444444;
+        background-color: #111111;
+        color: #ffffff;
       }
       .submit-button {
         background-color: red;
         border: none;
         color: #ffffff;
-        padding: 5px 10px;
+        padding: 8px 12px;
         cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 700;
+        transition: background-color 0.3s;
+      }
+      .submit-button:hover {
+        background-color: #ff4d4d;
+      }
+
+      /* FORM DE INSCRIPCIÓN */
+      .inscripcion-form {
+        background-color: #222222;
+        padding: 20px;
+        margin-top: 20px;
+        text-align: left;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        display: inline-block;
+      }
+      .inscripcion-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+      .inscripcion-form input,
+      .inscripcion-form select {
+        margin-bottom: 10px;
+        width: 250px;
+        padding: 5px;
+        border: 1px solid #444444;
+        background-color: #111111;
+        color: #ffffff;
+      }
+      .inscripcion-form .submit-button {
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -146,10 +247,29 @@
     <!-- HOME SECTION -->
     <div class="container" id="homeSection">
       <h1 class="section-title">Bienvenidos a XTrong Games</h1>
-      <p>Aquí puedes ver la información de la competición</p>
-      <button class="button-large" onclick="goToSchedule()">Ver Horario</button>
-      <button class="button-large" onclick="goToRanking()">Ver Ranking</button>
-      <button class="button-large" onclick="participarSorteo()">Sorteo / Votación</button>
+      <p style="font-size:18px; letter-spacing:1px; margin-bottom:30px;">
+        ¡La competición definitiva para amantes del CrossFit!
+      </p>
+      <!-- 3 Botones en forma de X (más grandes, con las barras gruesas) -->
+
+      <button class="x-button" onclick="goToSchedule()">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="button-text">Horario</div>
+      </button>
+
+      <button class="x-button" onclick="goToRanking()">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="button-text">Ranking</div>
+      </button>
+
+      <!-- Botón de inscripción, en lugar de Sorteo -->
+      <button class="x-button" onclick="goToInscripcion()">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="button-text">Inscripción</div>
+      </button>
     </div>
 
     <!-- SCHEDULE SECTION -->
@@ -164,8 +284,6 @@
     <!-- RANKING SECTION -->
     <div class="container hidden" id="rankingSection">
       <button class="back-button" onclick="goHome()">&larr; Volver</button>
-
-      <!-- Ranking General Masculino -->
       <h2 class="section-title">Ranking General Masculino (Individual)</h2>
       <table>
         <thead>
@@ -182,7 +300,6 @@
         <tbody id="rankingMenBody"></tbody>
       </table>
 
-      <!-- Ranking General Femenino -->
       <h2 class="section-title">Ranking General Femenino (Individual)</h2>
       <table>
         <thead>
@@ -199,7 +316,6 @@
         <tbody id="rankingWomenBody"></tbody>
       </table>
 
-      <!-- Ranking por Edades Masculino -->
       <h2 class="section-title">Ranking Edades Masculino</h2>
       <table>
         <thead>
@@ -215,7 +331,6 @@
         <tbody id="rankingAgeMenBody"></tbody>
       </table>
 
-      <!-- Ranking por Edades Femenino -->
       <h2 class="section-title">Ranking Edades Femenino</h2>
       <table>
         <thead>
@@ -231,7 +346,6 @@
         <tbody id="rankingAgeWomenBody"></tbody>
       </table>
 
-      <!-- Ranking Parejas Men -->
       <h2 class="section-title">Ranking Parejas Men</h2>
       <table>
         <thead>
@@ -249,7 +363,6 @@
         <tbody id="pairsMenBody"></tbody>
       </table>
 
-      <!-- Ranking Parejas Women -->
       <h2 class="section-title">Ranking Parejas Women</h2>
       <table>
         <thead>
@@ -267,7 +380,6 @@
         <tbody id="pairsWomenBody"></tbody>
       </table>
 
-      <!-- Ranking Parejas Mixto -->
       <h2 class="section-title">Ranking Parejas Mixto</h2>
       <table>
         <thead>
@@ -284,7 +396,6 @@
         </thead>
         <tbody id="pairsMixBody"></tbody>
       </table>
-
     </div>
 
     <!-- DETAIL SECTION -->
@@ -292,7 +403,6 @@
       <button class="back-button" onclick="goToRanking()">&larr; Volver</button>
       <h2 class="section-title">Detalle del Atleta</h2>
       <p id="detailHeader">Información del Atleta</p>
-
       <table>
         <thead>
           <tr>
@@ -304,9 +414,49 @@
       </table>
     </div>
 
+    <!-- NUEVA SECCION: INSCRIPCION -->
+    <div class="container hidden" id="inscripcionSection">
+      <button class="back-button" onclick="goHome()">&larr; Volver</button>
+      <h2 class="section-title">Inscripción</h2>
+
+      <form class="inscripcion-form" id="inscripcionForm">
+        <label>Nombre:</label>
+        <input type="text" id="inscName" required />
+
+        <label>Edad:</label>
+        <input type="number" id="inscAge" required />
+
+        <label>Teléfono:</label>
+        <input type="text" id="inscPhone" required />
+
+        <label>Email:</label>
+        <input type="email" id="inscEmail" required />
+
+        <label>¿Individual o Pareja?</label>
+        <select id="inscModalidad" onchange="onModalidadChange()">
+          <option value="individual">Individual</option>
+          <option value="pareja">Pareja</option>
+        </select>
+
+        <!-- Datos de la 2a persona, solo si es pareja -->
+        <div id="segundaPersona" class="hidden">
+          <label>Nombre Persona 2:</label>
+          <input type="text" id="inscName2" />
+          <label>Edad Persona 2:</label>
+          <input type="number" id="inscAge2" />
+        </div>
+
+        <button type="button" class="submit-button" onclick="enviarInscripcion()">
+          Inscribirme
+        </button>
+      </form>
+
+      <p style="margin-top:20px;" id="inscResultMsg"></p>
+    </div>
+
     <!-- ADMIN PANEL -->
     <div class="container hidden" id="adminPanel">
-      <h2>Panel de Administración</h2>
+      <h2 class="section-title">Panel de Administración</h2>
       <div class="admin-container">
         <h3>Añadir fondo para pantalla principal</h3>
         <label for="publicBackground">Seleccionar Fondo:</label>
@@ -322,68 +472,53 @@
           <option value="parejas">Parejas</option>
         </select>
         <br />
-
         <!-- INDIVIDUAL FORM -->
         <div id="individualForm">
           <label>Nombre:</label>
           <input type="text" id="individualName" placeholder="Nombre" /><br />
-
           <label>Edad:</label>
           <input type="number" id="individualAge" placeholder="Edad" /><br />
-
           <label>Género:</label>
           <select id="genderSelect">
             <option value="men">Men</option>
             <option value="women">Women</option>
           </select><br />
-
           <label>Bib:</label>
           <input type="text" id="individualBib" placeholder="Número de dorsal" /><br />
-
           <label>Tiempo (hh:mm:ss):</label>
           <input type="text" id="individualTime" placeholder="00:00:00" /><br />
-
           <label>Horario (ej: Heat 1):</label>
           <input type="text" id="individualHeat" placeholder="Heat" /><br />
-
           <button class="submit-button" onclick="addIndividual()">Añadir Individual</button>
         </div>
-
         <!-- PAREJAS FORM -->
         <div id="parejasForm" class="hidden">
           <label>Bib Pareja:</label>
           <input type="text" id="parejaBib" placeholder="Número de dorsal" /><br />
-
           <label>Nombre Persona 1:</label>
           <input type="text" id="pareja1Name" /><br />
           <label>Edad Persona 1:</label>
           <input type="number" id="pareja1Age" /><br />
-
           <label>Nombre Persona 2:</label>
           <input type="text" id="pareja2Name" /><br />
           <label>Edad Persona 2:</label>
           <input type="number" id="pareja2Age" /><br />
-
           <label>Categoría Parejas:</label>
           <select id="genderPairSelect">
             <option value="men">Parejas Men</option>
             <option value="women">Parejas Women</option>
             <option value="mixto">Parejas Mixto</option>
           </select><br />
-
           <label>Tiempo (hh:mm:ss):</label>
           <input type="text" id="parejaTime" placeholder="00:00:00" /><br />
-
           <label>Horario (ej: Heat 2):</label>
           <input type="text" id="parejaHeat" placeholder="Heat" /><br />
-
           <button class="submit-button" onclick="addPareja()">Añadir Pareja</button>
         </div>
       </div>
     </div>
 
     <script>
-      // Arrays para almacenar la información
       let individuals = [];
       let pairs = [];
 
@@ -391,7 +526,7 @@
       const adminUsername = "Xone";
       const adminPassword = "XStrong";
 
-      // Carga del fondo (si existe) al iniciar
+      // Al cargar, miramos si hay fondo guardado
       window.addEventListener("load", () => {
         const savedBackground = localStorage.getItem("xtrongBackground");
         if (savedBackground) {
@@ -399,10 +534,76 @@
         }
       });
 
+      /*-------------------------------------------
+        Navegación principal
+      -------------------------------------------*/
+      function goHome() {
+        hideAll();
+        document.getElementById("homeSection").classList.remove("hidden");
+      }
+      function goToSchedule() {
+        hideAll();
+        document.getElementById("scheduleSection").classList.remove("hidden");
+      }
+      function goToRanking() {
+        hideAll();
+        document.getElementById("rankingSection").classList.remove("hidden");
+        refreshRankings();
+      }
+      function goToInscripcion() {
+        hideAll();
+        document.getElementById("inscripcionSection").classList.remove("hidden");
+      }
+      function hideAll() {
+        document.getElementById("homeSection").classList.add("hidden");
+        document.getElementById("scheduleSection").classList.add("hidden");
+        document.getElementById("rankingSection").classList.add("hidden");
+        document.getElementById("detailSection").classList.add("hidden");
+        document.getElementById("inscripcionSection").classList.add("hidden");
+      }
+
+      /*-------------------------------------------
+        Inscripción 
+      -------------------------------------------*/
+      function onModalidadChange() {
+        const modalidad = document.getElementById("inscModalidad").value;
+        const segundaPersonaDiv = document.getElementById("segundaPersona");
+        if (modalidad === "pareja") {
+          segundaPersonaDiv.classList.remove("hidden");
+        } else {
+          segundaPersonaDiv.classList.add("hidden");
+        }
+      }
+
+      function enviarInscripcion() {
+        // Tomamos datos
+        const name = document.getElementById("inscName").value;
+        const age = parseInt(document.getElementById("inscAge").value) || 0;
+        const phone = document.getElementById("inscPhone").value;
+        const email = document.getElementById("inscEmail").value;
+        const modalidad = document.getElementById("inscModalidad").value;
+
+        let msg = "";
+        if (modalidad === "individual") {
+          // Inscripción individual
+          msg = `Inscripción recibida: ${name}, ${age} años\nTel: ${phone} | Email: ${email}\nModalidad: Individual`;
+        } else {
+          // Pareja
+          const name2 = document.getElementById("inscName2").value;
+          const age2 = parseInt(document.getElementById("inscAge2").value) || 0;
+          msg = `Inscripción recibida:\n- ${name}, ${age} años\n- ${name2}, ${age2} años\nTel: ${phone} | Email: ${email}\nModalidad: Pareja`;
+        }
+
+        document.getElementById("inscResultMsg").textContent = msg;
+        // Podrías enviar a servidor, etc.
+      }
+
+      /*-------------------------------------------
+        Administración
+      -------------------------------------------*/
       function showAdminPanel() {
         const username = prompt("Usuario:");
         const password = prompt("Contraseña:");
-
         if (username === adminUsername && password === adminPassword) {
           isAdminLoggedIn = true;
           document.getElementById("adminPanel").classList.remove("hidden");
@@ -422,7 +623,7 @@
         const fileInput = document.getElementById("publicBackground");
         if (fileInput.files && fileInput.files[0]) {
           const reader = new FileReader();
-          reader.onload = function (e) {
+          reader.onload = function(e) {
             localStorage.setItem("xtrongBackground", e.target.result);
             document.body.style.backgroundImage = `url(${e.target.result})`;
           };
@@ -430,6 +631,7 @@
         }
       }
 
+      /* Form Admin: Añadir Atletas / Parejas */
       function onCategoryChange() {
         const categorySelect = document.getElementById("categorySelect").value;
         const individualForm = document.getElementById("individualForm");
@@ -447,23 +649,15 @@
       function addIndividual() {
         const name = document.getElementById("individualName").value;
         const age = parseInt(document.getElementById("individualAge").value) || 0;
-        const gender = document.getElementById("genderSelect").value; // men | women
+        const gender = document.getElementById("genderSelect").value;
         const bib = document.getElementById("individualBib").value;
         const time = document.getElementById("individualTime").value;
         const heat = document.getElementById("individualHeat").value;
         const rango = calcularRangoEdad(age);
 
-        const newAthlete = {
-          bib,
-          name,
-          age,
-          gender,
-          rango,
-          time,
-          heat,
-        };
-
+        const newAthlete = { bib, name, age, gender, rango, time, heat };
         individuals.push(newAthlete);
+
         alert(`Atleta Individual añadido: ${name} (${gender}), Rango: ${rango}`);
 
         // Limpiar
@@ -482,27 +676,16 @@
         const age1 = parseInt(document.getElementById("pareja1Age").value) || 0;
         const name2 = document.getElementById("pareja2Name").value;
         const age2 = parseInt(document.getElementById("pareja2Age").value) || 0;
-        const pairCat = document.getElementById("genderPairSelect").value; // men | women | mixto
+        const pairCat = document.getElementById("genderPairSelect").value;
         const time = document.getElementById("parejaTime").value;
         const heat = document.getElementById("parejaHeat").value;
 
         const rango1 = calcularRangoEdad(age1);
         const rango2 = calcularRangoEdad(age2);
 
-        const newPair = {
-          bib,
-          name1,
-          age1,
-          rango1,
-          name2,
-          age2,
-          rango2,
-          pairCat,
-          time,
-          heat,
-        };
-
+        const newPair = { bib, name1, age1, rango1, name2, age2, rango2, pairCat, time, heat };
         pairs.push(newPair);
+
         alert(`Pareja añadida: ${name1} & ${name2}, ${pairCat}, Rangos: ${rango1} y ${rango2}`);
 
         // Limpiar
@@ -522,7 +705,9 @@
         return `${base}-${base + 9}`;
       }
 
-      // Actualiza los listados de Horarios y Rankings
+      /*-------------------------------------------
+        Actualiza Horario y Rankings (ya existente)
+      -------------------------------------------*/
       function refreshAll() {
         refreshSchedule();
         refreshRankings();
@@ -534,34 +719,22 @@
           scheduleDiv.innerHTML = "<p>No hay atletas cargados todavía.</p>";
           return;
         }
-        // Mostramos todos por su heat
-        // Creamos un map: heat -> array de competidores
         const scheduleMap = {};
-        // Insertamos individuales
-        individuals.forEach((ind) => {
-          if (!scheduleMap[ind.heat]) {
-            scheduleMap[ind.heat] = [];
-          }
+        individuals.forEach(ind => {
+          if (!scheduleMap[ind.heat]) scheduleMap[ind.heat] = [];
           scheduleMap[ind.heat].push(`${ind.bib} - ${ind.name} (${ind.gender})`);
         });
-        // Insertamos parejas
-        pairs.forEach((p) => {
-          if (!scheduleMap[p.heat]) {
-            scheduleMap[p.heat] = [];
-          }
-          scheduleMap[p.heat].push(
-            `${p.bib} - ${p.name1} & ${p.name2} (${p.pairCat})`
-          );
+        pairs.forEach(p => {
+          if (!scheduleMap[p.heat]) scheduleMap[p.heat] = [];
+          scheduleMap[p.heat].push(`${p.bib} - ${p.name1} & ${p.name2} (${p.pairCat})`);
         });
 
         let html = "";
-        for (const heatKey of Object.keys(scheduleMap)) {
-          if (!heatKey || heatKey.trim() === "") {
-            continue;
-          }
-          html += `<h3>${heatKey}</h3><ul>`;
-          scheduleMap[heatKey].forEach((line) => {
-            html += `<li>${line}</li>`;
+        for (const heatKey in scheduleMap) {
+          if (!heatKey || heatKey.trim()==="") continue;
+          html += `<h3 style="margin-top:20px; font-size:22px; text-transform:uppercase;">${heatKey}</h3><ul style="list-style:none; padding-left:0;">`;
+          scheduleMap[heatKey].forEach(line => {
+            html += `<li style="margin:5px 0;">${line}</li>`;
           });
           html += "</ul>";
         }
@@ -569,7 +742,6 @@
       }
 
       function refreshRankings() {
-        // Limpiamos los tbodies
         document.getElementById("rankingMenBody").innerHTML = "";
         document.getElementById("rankingWomenBody").innerHTML = "";
         document.getElementById("rankingAgeMenBody").innerHTML = "";
@@ -578,7 +750,6 @@
         document.getElementById("pairsWomenBody").innerHTML = "";
         document.getElementById("pairsMixBody").innerHTML = "";
 
-        // Ordenamos por tiempo con una función auxiliar (simple, as string)
         function timeToSeconds(t) {
           if (!t) return 9999999;
           const parts = t.split(":");
@@ -586,222 +757,171 @@
           const [hh, mm, ss] = parts.map(Number);
           return hh * 3600 + mm * 60 + ss;
         }
-        // Sort individuals by time
-        // (Igual para pairs)
 
-        // Ranking men
-        const men = individuals.filter((i) => i.gender === "men").sort((a, b) => {
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        men.forEach((ath, idx) => {
+        const men = individuals
+          .filter(i => i.gender==="men")
+          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
+        men.forEach((ath, idx)=>{
           const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
-            <td>${ath.bib || ""}</td>
+          row.innerHTML=`
+            <td>${idx+1}</td>
+            <td>${ath.bib||""}</td>
             <td>${ath.name}</td>
             <td>${ath.age}</td>
             <td>${ath.rango}</td>
-            <td>${ath.time || ""}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
-          `;
+            <td>${ath.time||""}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
           document.getElementById("rankingMenBody").appendChild(row);
         });
 
-        // Ranking women
-        const women = individuals.filter((i) => i.gender === "women").sort((a, b) => {
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        women.forEach((ath, idx) => {
+        const women = individuals
+          .filter(i => i.gender==="women")
+          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
+        women.forEach((ath, idx)=>{
           const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
-            <td>${ath.bib || ""}</td>
+          row.innerHTML=`
+            <td>${idx+1}</td>
+            <td>${ath.bib||""}</td>
             <td>${ath.name}</td>
             <td>${ath.age}</td>
             <td>${ath.rango}</td>
-            <td>${ath.time || ""}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
-          `;
+            <td>${ath.time||""}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
           document.getElementById("rankingWomenBody").appendChild(row);
         });
 
-        // Ranking edad men
-        const menAges = [...men].sort((a, b) => {
-          // Podríamos agrupar por rango, pero aquí sólo ordenamos por time
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        menAges.forEach((ath, idx) => {
+        // Edades men
+        const menAges = [...men];
+        menAges.forEach((ath,idx)=>{
           const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
+          row.innerHTML=`
+            <td>${idx+1}</td>
             <td>${ath.bib}</td>
             <td>${ath.name}</td>
             <td>${ath.rango}</td>
             <td>${ath.time}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
-          `;
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
           document.getElementById("rankingAgeMenBody").appendChild(row);
         });
 
-        // Ranking edad women
-        const womenAges = [...women].sort((a, b) => {
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        womenAges.forEach((ath, idx) => {
+        // Edades women
+        const womenAges = [...women];
+        womenAges.forEach((ath,idx)=>{
           const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
+          row.innerHTML=`
+            <td>${idx+1}</td>
             <td>${ath.bib}</td>
             <td>${ath.name}</td>
             <td>${ath.rango}</td>
             <td>${ath.time}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
-          `;
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
           document.getElementById("rankingAgeWomenBody").appendChild(row);
         });
 
         // Pairs men
-        const menPairs = pairs.filter((p) => p.pairCat === "men").sort((a, b) => {
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        menPairs.forEach((p, idx) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
+        const menPairs = pairs
+          .filter(p=>p.pairCat==="men")
+          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
+        menPairs.forEach((p,idx)=>{
+          const row=document.createElement("tr");
+          row.innerHTML=`
+            <td>${idx+1}</td>
             <td>${p.bib}</td>
             <td>${p.name1}</td>
             <td>${p.rango1}</td>
             <td>${p.name2}</td>
             <td>${p.rango2}</td>
             <td>${p.time}</td>
-            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>
-          `;
+            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>`;
           document.getElementById("pairsMenBody").appendChild(row);
         });
 
         // Pairs women
-        const womenPairs = pairs.filter((p) => p.pairCat === "women").sort((a, b) => {
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        womenPairs.forEach((p, idx) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
+        const womenPairs = pairs
+          .filter(p=>p.pairCat==="women")
+          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
+        womenPairs.forEach((p,idx)=>{
+          const row=document.createElement("tr");
+          row.innerHTML=`
+            <td>${idx+1}</td>
             <td>${p.bib}</td>
             <td>${p.name1}</td>
             <td>${p.rango1}</td>
             <td>${p.name2}</td>
             <td>${p.rango2}</td>
             <td>${p.time}</td>
-            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>
-          `;
+            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>`;
           document.getElementById("pairsWomenBody").appendChild(row);
         });
 
-        // Pairs mix
-        const mixPairs = pairs.filter((p) => p.pairCat === "mixto").sort((a, b) => {
-          return timeToSeconds(a.time) - timeToSeconds(b.time);
-        });
-        mixPairs.forEach((p, idx) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${idx + 1}</td>
+        // Pairs mixto
+        const mixPairs = pairs
+          .filter(p=>p.pairCat==="mixto")
+          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
+        mixPairs.forEach((p,idx)=>{
+          const row=document.createElement("tr");
+          row.innerHTML=`
+            <td>${idx+1}</td>
             <td>${p.bib}</td>
             <td>${p.name1}</td>
             <td>${p.rango1}</td>
             <td>${p.name2}</td>
             <td>${p.rango2}</td>
             <td>${p.time}</td>
-            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>
-          `;
+            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>`;
           document.getElementById("pairsMixBody").appendChild(row);
         });
       }
 
-      // Navegación
-      function goHome() {
-        hideAll();
-        document.getElementById("homeSection").classList.remove("hidden");
-      }
-
-      function goToSchedule() {
-        hideAll();
-        document.getElementById("scheduleSection").classList.remove("hidden");
-      }
-
-      function goToRanking() {
-        hideAll();
-        document.getElementById("rankingSection").classList.remove("hidden");
-        refreshRankings();
-      }
-
-      function hideAll() {
-        document.getElementById("homeSection").classList.add("hidden");
-        document.getElementById("scheduleSection").classList.add("hidden");
-        document.getElementById("rankingSection").classList.add("hidden");
-        document.getElementById("detailSection").classList.add("hidden");
-      }
-
-      // Mostrar detalles de atleta
+      // DETALLE
       function showAthleteDetail(bib) {
         hideAll();
         document.getElementById("detailSection").classList.remove("hidden");
-
         const detailHeader = document.getElementById("detailHeader");
         const detailTableBody = document.getElementById("detailTableBody");
         detailTableBody.innerHTML = "";
 
-        // Buscamos al athlete o pair segun su bib
-        let found = individuals.find((x) => x.bib === bib);
-        let isPair = false;
-        if (!found) {
-          found = pairs.find((x) => x.bib === bib);
+        let found = individuals.find(x=>x.bib===bib);
+        let isPair=false;
+        if(!found){
+          found = pairs.find(x=>x.bib===bib);
           isPair = !!found;
         }
-        if (!found) {
-          detailHeader.textContent = `No se encontró el BIB ${bib}`;
+        if(!found){
+          detailHeader.textContent=`No se encontró el BIB ${bib}`;
           return;
         }
-
-        if (!isPair) {
-          // es un individual
+        if(!isPair){
           detailHeader.textContent = `Detalle del Atleta BIB: ${found.bib} - ${found.name}`;
-          // Podríamos mostrar splits o algo adicional
-          // De momento, mostramos un dummy
-          const splits = [
-            { segment: "Salida - 1km", time: "05:00" },
-            { segment: "1km - 2km", time: "05:10" },
-            { segment: "2km - 3km", time: "05:20" },
-            { segment: "3km - 4km", time: "05:25" },
-            { segment: "4km - Meta", time: "05:30" },
+          const splits=[
+            {segment:"Salida - 1km", time:"05:00"},
+            {segment:"1km - 2km", time:"05:10"},
+            {segment:"2km - 3km", time:"05:20"},
+            {segment:"3km - 4km", time:"05:25"},
+            {segment:"4km - Meta", time:"05:30"},
           ];
-          splits.forEach((s) => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${s.segment}</td><td>${s.time}</td>`;
+          splits.forEach(s=>{
+            const tr=document.createElement("tr");
+            tr.innerHTML=`<td>${s.segment}</td><td>${s.time}</td>`;
             detailTableBody.appendChild(tr);
           });
         } else {
-          // es una pareja
           detailHeader.textContent = `Detalle de la Pareja BIB: ${found.bib} - ${found.name1} & ${found.name2}`;
-          // Splits dummy
-          const splits = [
-            { segment: "Salida - 1km", time: "06:00" },
-            { segment: "1km - 2km", time: "06:15" },
-            { segment: "2km - 3km", time: "06:25" },
-            { segment: "3km - 4km", time: "06:30" },
-            { segment: "4km - Meta", time: "06:45" },
+          const splits=[
+            {segment:"Salida - 1km", time:"06:00"},
+            {segment:"1km - 2km", time:"06:15"},
+            {segment:"2km - 3km", time:"06:25"},
+            {segment:"3km - 4km", time:"06:30"},
+            {segment:"4km - Meta", time:"06:45"},
           ];
-          splits.forEach((s) => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${s.segment}</td><td>${s.time}</td>`;
+          splits.forEach(s=>{
+            const tr=document.createElement("tr");
+            tr.innerHTML=`<td>${s.segment}</td><td>${s.time}</td>`;
             detailTableBody.appendChild(tr);
           });
         }
       }
 
-      function participarSorteo() {
-        alert("Gracias por participar en la votación/sorteo.");
-      }
     </script>
   </body>
 </html>
