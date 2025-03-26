@@ -34,7 +34,8 @@
       nav {
         margin-left: auto;
       }
-      .admin-button, .logout-button {
+      .admin-button,
+      .logout-button {
         background-color: #333333;
         border: 1px solid red;
         padding: 8px 12px;
@@ -43,13 +44,13 @@
         text-transform: uppercase;
         transition: background-color 0.3s;
       }
-      .admin-button:hover, .logout-button:hover {
+      .admin-button:hover,
+      .logout-button:hover {
         background-color: #555555;
       }
       .logout-button {
         margin-left: 10px;
       }
-
       .container {
         margin: 20px auto;
         max-width: 1200px;
@@ -58,20 +59,20 @@
       }
       .section-title {
         font-size: 32px;
-        margin-bottom: 20px;
-        margin-top: 20px;
+        margin: 20px 0;
         text-transform: uppercase;
         letter-spacing: 2px;
         font-weight: 700;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
       }
-      .hidden { display: none; }
-
-      /* BOTONES X (más grandes) */
+      .hidden {
+        display: none;
+      }
+      /* Botones en forma de X (barras más gruesas) */
       .x-button {
         position: relative;
         display: inline-block;
-        width: 220px;  /* Aumentado */
+        width: 220px;
         height: 220px;
         margin: 30px;
         border: none;
@@ -86,11 +87,11 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 220px;  
-        height: 40px;  /* Barras más gruesas */
+        width: 220px;
+        height: 60px; /* Barras más gruesas */
         background-color: red;
         transform-origin: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.7);
         transition: background-color 0.3s;
       }
       .x-button .bar1 {
@@ -114,7 +115,7 @@
         text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
         pointer-events: none;
       }
-
+      /* Estilo de tablas */
       table {
         width: 100%;
         border-collapse: collapse;
@@ -136,7 +137,6 @@
       table tbody tr:hover {
         background-color: rgba(255,255,255,0.05);
       }
-
       .back-button {
         background-color: #333333;
         border: 1px solid red;
@@ -151,7 +151,6 @@
       .back-button:hover {
         background-color: #555555;
       }
-
       /* Responsive */
       @media (max-width: 768px) {
         .section-title {
@@ -164,20 +163,19 @@
         }
         .x-button .bar {
           width: 150px;
-          height: 30px;
+          height: 40px;
         }
         .button-text {
           font-size: 16px;
         }
       }
-
       /* Panel de administración */
       .admin-container {
         background-color: #222222;
         padding: 10px;
         margin-top: 20px;
         text-align: left;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.7);
       }
       .admin-container label {
         display: block;
@@ -206,8 +204,7 @@
       .submit-button:hover {
         background-color: #ff4d4d;
       }
-
-      /* FORM DE INSCRIPCIÓN */
+      /* Formulario de inscripción */
       .inscripcion-form {
         background-color: #222222;
         padding: 20px;
@@ -236,6 +233,7 @@
     </style>
   </head>
   <body>
+    <!-- Cabecera -->
     <header>
       <div class="logo"><span class="x">X</span>Trong Games</div>
       <nav>
@@ -244,27 +242,23 @@
       </nav>
     </header>
 
-    <!-- HOME SECTION -->
+    <!-- Sección HOME -->
     <div class="container" id="homeSection">
       <h1 class="section-title">Bienvenidos a XTrong Games</h1>
       <p style="font-size:18px; letter-spacing:1px; margin-bottom:30px;">
         ¡Una competición para amantes de las carreras Híbridas!
       </p>
-      <!-- 3 Botones en forma de X (más grandes, con las barras gruesas) -->
-
+      <!-- Botones con forma de X -->
       <button class="x-button" onclick="goToSchedule()">
         <div class="bar bar1"></div>
         <div class="bar bar2"></div>
         <div class="button-text">Horario</div>
       </button>
-
       <button class="x-button" onclick="goToRanking()">
         <div class="bar bar1"></div>
         <div class="bar bar2"></div>
         <div class="button-text">Ranking</div>
       </button>
-
-      <!-- Botón de inscripción, en lugar de Sorteo -->
       <button class="x-button" onclick="goToInscripcion()">
         <div class="bar bar1"></div>
         <div class="bar bar2"></div>
@@ -272,7 +266,7 @@
       </button>
     </div>
 
-    <!-- SCHEDULE SECTION -->
+    <!-- Sección HORARIO -->
     <div class="container hidden" id="scheduleSection">
       <button class="back-button" onclick="goHome()">&larr; Volver</button>
       <h2 class="section-title">Horarios de Salida</h2>
@@ -281,10 +275,10 @@
       </div>
     </div>
 
-    <!-- RANKING SECTION -->
+    <!-- Sección RANKING -->
     <div class="container hidden" id="rankingSection">
       <button class="back-button" onclick="goHome()">&larr; Volver</button>
-      <h2 class="section-title">Ranking General Masculino (Individual)</h2>
+      <h2 class="section-title">Ranking General</h2>
       <table>
         <thead>
           <tr>
@@ -297,108 +291,11 @@
             <th>Detalle</th>
           </tr>
         </thead>
-        <tbody id="rankingMenBody"></tbody>
-      </table>
-
-      <h2 class="section-title">Ranking General Femenino (Individual)</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Bib</th>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Rango</th>
-            <th>Tiempo</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="rankingWomenBody"></tbody>
-      </table>
-
-      <h2 class="section-title">Ranking Edades Masculino</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Bib</th>
-            <th>Nombre</th>
-            <th>Rango Edad</th>
-            <th>Tiempo</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="rankingAgeMenBody"></tbody>
-      </table>
-
-      <h2 class="section-title">Ranking Edades Femenino</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Bib</th>
-            <th>Nombre</th>
-            <th>Rango Edad</th>
-            <th>Tiempo</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="rankingAgeWomenBody"></tbody>
-      </table>
-
-      <h2 class="section-title">Ranking Parejas Men</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Bib</th>
-            <th>Nombre 1</th>
-            <th>Rango1</th>
-            <th>Nombre 2</th>
-            <th>Rango2</th>
-            <th>Tiempo</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="pairsMenBody"></tbody>
-      </table>
-
-      <h2 class="section-title">Ranking Parejas Women</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Bib</th>
-            <th>Nombre 1</th>
-            <th>Rango1</th>
-            <th>Nombre 2</th>
-            <th>Rango2</th>
-            <th>Tiempo</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="pairsWomenBody"></tbody>
-      </table>
-
-      <h2 class="section-title">Ranking Parejas Mixto</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Bib</th>
-            <th>Nombre 1</th>
-            <th>Rango1</th>
-            <th>Nombre 2</th>
-            <th>Rango2</th>
-            <th>Tiempo</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="pairsMixBody"></tbody>
+        <tbody id="rankingGeneralBody"></tbody>
       </table>
     </div>
 
-    <!-- DETAIL SECTION -->
+    <!-- Sección DETALLE -->
     <div class="container hidden" id="detailSection">
       <button class="back-button" onclick="goToRanking()">&larr; Volver</button>
       <h2 class="section-title">Detalle del Atleta</h2>
@@ -414,47 +311,36 @@
       </table>
     </div>
 
-    <!-- NUEVA SECCION: INSCRIPCION -->
+    <!-- Sección INSCRIPCIÓN -->
     <div class="container hidden" id="inscripcionSection">
       <button class="back-button" onclick="goHome()">&larr; Volver</button>
       <h2 class="section-title">Inscripción</h2>
-
       <form class="inscripcion-form" id="inscripcionForm">
         <label>Nombre:</label>
         <input type="text" id="inscName" required />
-
         <label>Edad:</label>
         <input type="number" id="inscAge" required />
-
         <label>Teléfono:</label>
         <input type="text" id="inscPhone" required />
-
         <label>Email:</label>
         <input type="email" id="inscEmail" required />
-
         <label>¿Individual o Pareja?</label>
         <select id="inscModalidad" onchange="onModalidadChange()">
           <option value="individual">Individual</option>
           <option value="pareja">Pareja</option>
         </select>
-
-        <!-- Datos de la 2a persona, solo si es pareja -->
         <div id="segundaPersona" class="hidden">
           <label>Nombre Persona 2:</label>
           <input type="text" id="inscName2" />
           <label>Edad Persona 2:</label>
           <input type="number" id="inscAge2" />
         </div>
-
-        <button type="button" class="submit-button" onclick="enviarInscripcion()">
-          Inscribirme
-        </button>
+        <button type="button" class="submit-button" onclick="enviarInscripcion()">Inscribirme</button>
       </form>
-
       <p style="margin-top:20px;" id="inscResultMsg"></p>
     </div>
 
-    <!-- ADMIN PANEL -->
+    <!-- Panel de ADMINISTRACIÓN -->
     <div class="container hidden" id="adminPanel">
       <h2 class="section-title">Panel de Administración</h2>
       <div class="admin-container">
@@ -463,7 +349,6 @@
         <input type="file" id="publicBackground" accept="image/*" />
         <button onclick="cambiarFondoPublico()">Cambiar Fondo</button>
       </div>
-
       <div class="admin-container">
         <h3>Añadir Atleta / Pareja</h3>
         <label for="categorySelect">Categoría:</label>
@@ -472,7 +357,7 @@
           <option value="parejas">Parejas</option>
         </select>
         <br />
-        <!-- INDIVIDUAL FORM -->
+        <!-- Formulario para Atleta Individual -->
         <div id="individualForm">
           <label>Nombre:</label>
           <input type="text" id="individualName" placeholder="Nombre" /><br />
@@ -491,7 +376,7 @@
           <input type="text" id="individualHeat" placeholder="Heat" /><br />
           <button class="submit-button" onclick="addIndividual()">Añadir Individual</button>
         </div>
-        <!-- PAREJAS FORM -->
+        <!-- Formulario para Pareja -->
         <div id="parejasForm" class="hidden">
           <label>Bib Pareja:</label>
           <input type="text" id="parejaBib" placeholder="Número de dorsal" /><br />
@@ -516,27 +401,115 @@
           <button class="submit-button" onclick="addPareja()">Añadir Pareja</button>
         </div>
       </div>
+      <div class="admin-container">
+        <h3>Gestión de Atletas</h3>
+        <table id="athletesTable">
+          <thead>
+            <tr>
+              <th>Bib</th>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Categoría</th>
+              <th>Horario</th>
+              <th>Pública</th>
+              <th>Pagado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Se llenará con refreshAthletesTable() -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <script>
+      // Función para generar un bib único si no se proporciona
+      function generateBib() {
+        return "BIB" + Date.now() + Math.floor(Math.random() * 1000);
+      }
+
+      /* ============================
+         BASE DE DATOS PERSISTENTE
+         ============================
+         Se utiliza localStorage para guardar los atletas.
+      */
+      let athletesDB = loadAthletesDB();
+      // Arrays para rankings en sesión (opcional)
       let individuals = [];
       let pairs = [];
-
       let isAdminLoggedIn = false;
       const adminUsername = "Xone";
       const adminPassword = "XStrong";
 
-      // Al cargar, miramos si hay fondo guardado
+      // Al cargar, se carga el fondo y se refresca la tabla
       window.addEventListener("load", () => {
         const savedBackground = localStorage.getItem("xtrongBackground");
         if (savedBackground) {
           document.body.style.backgroundImage = `url(${savedBackground})`;
         }
+        refreshAthletesTable();
       });
 
-      /*-------------------------------------------
-        Navegación principal
-      -------------------------------------------*/
+      // Funciones para trabajar con la base (localStorage)
+      function loadAthletesDB() {
+        const data = localStorage.getItem("athletesDB");
+        return data ? JSON.parse(data) : [];
+      }
+      function saveAthletesDB(db) {
+        localStorage.setItem("athletesDB", JSON.stringify(db));
+      }
+      function refreshAthletesTable() {
+        const tbody = document.getElementById("athletesTable").getElementsByTagName("tbody")[0];
+        tbody.innerHTML = "";
+        athletesDB.forEach((athlete) => {
+          let nameField =
+            athlete.type === "individual"
+              ? athlete.name
+              : `${athlete.name1} & ${athlete.name2}`;
+          let ageField =
+            athlete.type === "individual"
+              ? athlete.age
+              : `${athlete.age1} / ${athlete.age2}`;
+          let category =
+            athlete.type === "individual" ? "Individual" : athlete.pairCat;
+          let row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${athlete.bib || "-"}</td>
+            <td>${nameField}</td>
+            <td>${ageField}</td>
+            <td>${category}</td>
+            <td>${athlete.heat || "-"}</td>
+            <td>${athlete.public ? "Sí" : "No"}</td>
+            <td>${athlete.paid ? "Sí" : "No"}</td>
+            <td><button onclick="editAthlete('${athlete.bib}')">Editar</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+      function editAthlete(bib) {
+        const index = athletesDB.findIndex((a) => a.bib === bib);
+        if (index === -1) {
+          alert("Atleta no encontrado.");
+          return;
+        }
+        const athlete = athletesDB[index];
+        const newHeat = prompt("Nuevo horario:", athlete.heat);
+        const publicInput = prompt("¿Aparece en la parte pública? (true/false):", athlete.public);
+        const paidInput = prompt("¿Ha pagado? (true/false):", athlete.paid);
+        athlete.heat = newHeat;
+        athlete.public = publicInput === "true";
+        athlete.paid = paidInput === "true";
+        athletesDB[index] = athlete;
+        saveAthletesDB(athletesDB);
+        refreshAthletesTable();
+        refreshSchedule();
+        refreshRankings();
+      }
+
+      /* ===============================
+         Navegación entre secciones
+      =============================== */
       function goHome() {
         hideAll();
         document.getElementById("homeSection").classList.remove("hidden");
@@ -544,6 +517,7 @@
       function goToSchedule() {
         hideAll();
         document.getElementById("scheduleSection").classList.remove("hidden");
+        refreshSchedule();
       }
       function goToRanking() {
         hideAll();
@@ -560,11 +534,12 @@
         document.getElementById("rankingSection").classList.add("hidden");
         document.getElementById("detailSection").classList.add("hidden");
         document.getElementById("inscripcionSection").classList.add("hidden");
+        document.getElementById("adminPanel").classList.add("hidden");
       }
 
-      /*-------------------------------------------
-        Inscripción 
-      -------------------------------------------*/
+      /* ================================
+         Funciones de Inscripción
+      ================================ */
       function onModalidadChange() {
         const modalidad = document.getElementById("inscModalidad").value;
         const segundaPersonaDiv = document.getElementById("segundaPersona");
@@ -574,33 +549,59 @@
           segundaPersonaDiv.classList.add("hidden");
         }
       }
-
       function enviarInscripcion() {
-        // Tomamos datos
         const name = document.getElementById("inscName").value;
         const age = parseInt(document.getElementById("inscAge").value) || 0;
         const phone = document.getElementById("inscPhone").value;
         const email = document.getElementById("inscEmail").value;
         const modalidad = document.getElementById("inscModalidad").value;
-
         let msg = "";
         if (modalidad === "individual") {
-          // Inscripción individual
           msg = `Inscripción recibida: ${name}, ${age} años\nTel: ${phone} | Email: ${email}\nModalidad: Individual`;
+          const athlete = {
+            type: "individual",
+            bib: generateBib(),
+            name: name,
+            age: age,
+            gender: "",
+            rango: calcularRangoEdad(age),
+            time: "",
+            heat: "",
+            public: false,
+            paid: false
+          };
+          athletesDB.push(athlete);
+          saveAthletesDB(athletesDB);
+          refreshAthletesTable();
         } else {
-          // Pareja
           const name2 = document.getElementById("inscName2").value;
           const age2 = parseInt(document.getElementById("inscAge2").value) || 0;
           msg = `Inscripción recibida:\n- ${name}, ${age} años\n- ${name2}, ${age2} años\nTel: ${phone} | Email: ${email}\nModalidad: Pareja`;
+          const athletePair = {
+            type: "pair",
+            bib: generateBib(),
+            name1: name,
+            age1: age,
+            rango1: calcularRangoEdad(age),
+            name2: name2,
+            age2: age2,
+            rango2: calcularRangoEdad(age2),
+            pairCat: "pareja",
+            time: "",
+            heat: "",
+            public: false,
+            paid: false
+          };
+          athletesDB.push(athletePair);
+          saveAthletesDB(athletesDB);
+          refreshAthletesTable();
         }
-
         document.getElementById("inscResultMsg").textContent = msg;
-        // Podrías enviar a servidor, etc.
       }
 
-      /*-------------------------------------------
-        Administración
-      -------------------------------------------*/
+      /* =====================================
+         Funciones del Panel de Administración
+      ===================================== */
       function showAdminPanel() {
         const username = prompt("Usuario:");
         const password = prompt("Contraseña:");
@@ -608,35 +609,31 @@
           isAdminLoggedIn = true;
           document.getElementById("adminPanel").classList.remove("hidden");
           document.getElementById("logoutButton").classList.remove("hidden");
+          refreshAthletesTable();
         } else {
           alert("Credenciales incorrectas.");
         }
       }
-
       function logout() {
         isAdminLoggedIn = false;
         document.getElementById("adminPanel").classList.add("hidden");
         document.getElementById("logoutButton").classList.add("hidden");
       }
-
       function cambiarFondoPublico() {
         const fileInput = document.getElementById("publicBackground");
         if (fileInput.files && fileInput.files[0]) {
           const reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             localStorage.setItem("xtrongBackground", e.target.result);
             document.body.style.backgroundImage = `url(${e.target.result})`;
           };
           reader.readAsDataURL(fileInput.files[0]);
         }
       }
-
-      /* Form Admin: Añadir Atletas / Parejas */
       function onCategoryChange() {
         const categorySelect = document.getElementById("categorySelect").value;
         const individualForm = document.getElementById("individualForm");
         const parejasForm = document.getElementById("parejasForm");
-
         if (categorySelect === "individual") {
           individualForm.classList.remove("hidden");
           parejasForm.classList.add("hidden");
@@ -645,50 +642,68 @@
           parejasForm.classList.remove("hidden");
         }
       }
-
       function addIndividual() {
-        const name = document.getElementById("individualName").value;
-        const age = parseInt(document.getElementById("individualAge").value) || 0;
-        const gender = document.getElementById("genderSelect").value;
-        const bib = document.getElementById("individualBib").value;
-        const time = document.getElementById("individualTime").value;
-        const heat = document.getElementById("individualHeat").value;
-        const rango = calcularRangoEdad(age);
-
-        const newAthlete = { bib, name, age, gender, rango, time, heat };
-        individuals.push(newAthlete);
-
+        let name = document.getElementById("individualName").value;
+        let age = parseInt(document.getElementById("individualAge").value) || 0;
+        let gender = document.getElementById("genderSelect").value;
+        let bib = document.getElementById("individualBib").value;
+        if (!bib) { bib = generateBib(); }
+        let time = document.getElementById("individualTime").value;
+        let heat = document.getElementById("individualHeat").value;
+        let rango = calcularRangoEdad(age);
+        let athlete = {
+          type: "individual",
+          bib: bib,
+          name: name,
+          age: age,
+          gender: gender,
+          rango: rango,
+          time: time,
+          heat: heat,
+          public: false,
+          paid: false
+        };
+        athletesDB.push(athlete);
+        saveAthletesDB(athletesDB);
+        refreshAthletesTable();
         alert(`Atleta Individual añadido: ${name} (${gender}), Rango: ${rango}`);
-
-        // Limpiar
         document.getElementById("individualName").value = "";
         document.getElementById("individualAge").value = "";
         document.getElementById("individualBib").value = "";
         document.getElementById("individualTime").value = "";
         document.getElementById("individualHeat").value = "";
-
-        refreshAll();
       }
-
       function addPareja() {
-        const bib = document.getElementById("parejaBib").value;
-        const name1 = document.getElementById("pareja1Name").value;
-        const age1 = parseInt(document.getElementById("pareja1Age").value) || 0;
-        const name2 = document.getElementById("pareja2Name").value;
-        const age2 = parseInt(document.getElementById("pareja2Age").value) || 0;
-        const pairCat = document.getElementById("genderPairSelect").value;
-        const time = document.getElementById("parejaTime").value;
-        const heat = document.getElementById("parejaHeat").value;
-
-        const rango1 = calcularRangoEdad(age1);
-        const rango2 = calcularRangoEdad(age2);
-
-        const newPair = { bib, name1, age1, rango1, name2, age2, rango2, pairCat, time, heat };
-        pairs.push(newPair);
-
+        let bib = document.getElementById("parejaBib").value;
+        if (!bib) { bib = generateBib(); }
+        let name1 = document.getElementById("pareja1Name").value;
+        let age1 = parseInt(document.getElementById("pareja1Age").value) || 0;
+        let name2 = document.getElementById("pareja2Name").value;
+        let age2 = parseInt(document.getElementById("pareja2Age").value) || 0;
+        let pairCat = document.getElementById("genderPairSelect").value;
+        let time = document.getElementById("parejaTime").value;
+        let heat = document.getElementById("parejaHeat").value;
+        let rango1 = calcularRangoEdad(age1);
+        let rango2 = calcularRangoEdad(age2);
+        let athletePair = {
+          type: "pair",
+          bib: bib,
+          name1: name1,
+          age1: age1,
+          rango1: rango1,
+          name2: name2,
+          age2: age2,
+          rango2: rango2,
+          pairCat: pairCat,
+          time: time,
+          heat: heat,
+          public: false,
+          paid: false
+        };
+        athletesDB.push(athletePair);
+        saveAthletesDB(athletesDB);
+        refreshAthletesTable();
         alert(`Pareja añadida: ${name1} & ${name2}, ${pairCat}, Rangos: ${rango1} y ${rango2}`);
-
-        // Limpiar
         document.getElementById("parejaBib").value = "";
         document.getElementById("pareja1Name").value = "";
         document.getElementById("pareja1Age").value = "";
@@ -696,232 +711,111 @@
         document.getElementById("pareja2Age").value = "";
         document.getElementById("parejaTime").value = "";
         document.getElementById("parejaHeat").value = "";
-
-        refreshAll();
       }
-
       function calcularRangoEdad(age) {
         const base = Math.floor(age / 10) * 10;
         return `${base}-${base + 9}`;
       }
-
-      /*-------------------------------------------
-        Actualiza Horario y Rankings (ya existente)
-      -------------------------------------------*/
-      function refreshAll() {
-        refreshSchedule();
-        refreshRankings();
-      }
-
+      /* ==================================
+         Funciones para Rankings y Horarios
+      ================================== */
       function refreshSchedule() {
         const scheduleDiv = document.getElementById("scheduleList");
-        if (individuals.length === 0 && pairs.length === 0) {
+        if (athletesDB.length === 0) {
           scheduleDiv.innerHTML = "<p>No hay atletas cargados todavía.</p>";
           return;
         }
-        const scheduleMap = {};
-        individuals.forEach(ind => {
-          if (!scheduleMap[ind.heat]) scheduleMap[ind.heat] = [];
-          scheduleMap[ind.heat].push(`${ind.bib} - ${ind.name} (${ind.gender})`);
+        let scheduleMap = {};
+        athletesDB.forEach((athlete) => {
+          let heat = athlete.heat || "Sin asignar";
+          if (!scheduleMap[heat]) scheduleMap[heat] = [];
+          let athleteName =
+            athlete.type === "individual"
+              ? athlete.name
+              : `${athlete.name1} & ${athlete.name2}`;
+          let athleteCategory =
+            athlete.type === "individual" ? athlete.gender : athlete.pairCat;
+          scheduleMap[heat].push(`${athlete.bib || "-"} - ${athleteName} (${athleteCategory})`);
         });
-        pairs.forEach(p => {
-          if (!scheduleMap[p.heat]) scheduleMap[p.heat] = [];
-          scheduleMap[p.heat].push(`${p.bib} - ${p.name1} & ${p.name2} (${p.pairCat})`);
-        });
-
         let html = "";
         for (const heatKey in scheduleMap) {
-          if (!heatKey || heatKey.trim()==="") continue;
+          if (!heatKey || heatKey.trim() === "") continue;
           html += `<h3 style="margin-top:20px; font-size:22px; text-transform:uppercase;">${heatKey}</h3><ul style="list-style:none; padding-left:0;">`;
-          scheduleMap[heatKey].forEach(line => {
+          scheduleMap[heatKey].forEach((line) => {
             html += `<li style="margin:5px 0;">${line}</li>`;
           });
           html += "</ul>";
         }
         scheduleDiv.innerHTML = html;
       }
-
       function refreshRankings() {
-        document.getElementById("rankingMenBody").innerHTML = "";
-        document.getElementById("rankingWomenBody").innerHTML = "";
-        document.getElementById("rankingAgeMenBody").innerHTML = "";
-        document.getElementById("rankingAgeWomenBody").innerHTML = "";
-        document.getElementById("pairsMenBody").innerHTML = "";
-        document.getElementById("pairsWomenBody").innerHTML = "";
-        document.getElementById("pairsMixBody").innerHTML = "";
-
-        function timeToSeconds(t) {
-          if (!t) return 9999999;
-          const parts = t.split(":");
-          if (parts.length !== 3) return 9999999;
-          const [hh, mm, ss] = parts.map(Number);
-          return hh * 3600 + mm * 60 + ss;
-        }
-
-        const men = individuals
-          .filter(i => i.gender==="men")
-          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
-        men.forEach((ath, idx)=>{
-          const row = document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${ath.bib||""}</td>
+        const tbody = document.getElementById("rankingGeneralBody");
+        tbody.innerHTML = "";
+        let individualAthletes = athletesDB.filter((a) => a.type === "individual");
+        individualAthletes.sort((a, b) => {
+          function timeToSeconds(t) {
+            if (!t) return 999999;
+            let parts = t.split(":");
+            if (parts.length !== 3) return 999999;
+            return Number(parts[0]) * 3600 + Number(parts[1]) * 60 + Number(parts[2]);
+          }
+          return timeToSeconds(a.time) - timeToSeconds(b.time);
+        });
+        individualAthletes.forEach((ath, idx) => {
+          let row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${ath.bib || "-"}</td>
             <td>${ath.name}</td>
             <td>${ath.age}</td>
             <td>${ath.rango}</td>
-            <td>${ath.time||""}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
-          document.getElementById("rankingMenBody").appendChild(row);
-        });
-
-        const women = individuals
-          .filter(i => i.gender==="women")
-          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
-        women.forEach((ath, idx)=>{
-          const row = document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${ath.bib||""}</td>
-            <td>${ath.name}</td>
-            <td>${ath.age}</td>
-            <td>${ath.rango}</td>
-            <td>${ath.time||""}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
-          document.getElementById("rankingWomenBody").appendChild(row);
-        });
-
-        // Edades men
-        const menAges = [...men];
-        menAges.forEach((ath,idx)=>{
-          const row = document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${ath.bib}</td>
-            <td>${ath.name}</td>
-            <td>${ath.rango}</td>
-            <td>${ath.time}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
-          document.getElementById("rankingAgeMenBody").appendChild(row);
-        });
-
-        // Edades women
-        const womenAges = [...women];
-        womenAges.forEach((ath,idx)=>{
-          const row = document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${ath.bib}</td>
-            <td>${ath.name}</td>
-            <td>${ath.rango}</td>
-            <td>${ath.time}</td>
-            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>`;
-          document.getElementById("rankingAgeWomenBody").appendChild(row);
-        });
-
-        // Pairs men
-        const menPairs = pairs
-          .filter(p=>p.pairCat==="men")
-          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
-        menPairs.forEach((p,idx)=>{
-          const row=document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${p.bib}</td>
-            <td>${p.name1}</td>
-            <td>${p.rango1}</td>
-            <td>${p.name2}</td>
-            <td>${p.rango2}</td>
-            <td>${p.time}</td>
-            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>`;
-          document.getElementById("pairsMenBody").appendChild(row);
-        });
-
-        // Pairs women
-        const womenPairs = pairs
-          .filter(p=>p.pairCat==="women")
-          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
-        womenPairs.forEach((p,idx)=>{
-          const row=document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${p.bib}</td>
-            <td>${p.name1}</td>
-            <td>${p.rango1}</td>
-            <td>${p.name2}</td>
-            <td>${p.rango2}</td>
-            <td>${p.time}</td>
-            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>`;
-          document.getElementById("pairsWomenBody").appendChild(row);
-        });
-
-        // Pairs mixto
-        const mixPairs = pairs
-          .filter(p=>p.pairCat==="mixto")
-          .sort((a,b)=> timeToSeconds(a.time)-timeToSeconds(b.time));
-        mixPairs.forEach((p,idx)=>{
-          const row=document.createElement("tr");
-          row.innerHTML=`
-            <td>${idx+1}</td>
-            <td>${p.bib}</td>
-            <td>${p.name1}</td>
-            <td>${p.rango1}</td>
-            <td>${p.name2}</td>
-            <td>${p.rango2}</td>
-            <td>${p.time}</td>
-            <td><button onclick="showAthleteDetail('${p.bib}')">Detalle</button></td>`;
-          document.getElementById("pairsMixBody").appendChild(row);
+            <td>${ath.time || "-"}</td>
+            <td><button onclick="showAthleteDetail('${ath.bib}')">Detalle</button></td>
+          `;
+          tbody.appendChild(row);
         });
       }
-
-      // DETALLE
       function showAthleteDetail(bib) {
         hideAll();
         document.getElementById("detailSection").classList.remove("hidden");
         const detailHeader = document.getElementById("detailHeader");
         const detailTableBody = document.getElementById("detailTableBody");
         detailTableBody.innerHTML = "";
-
-        let found = individuals.find(x=>x.bib===bib);
-        let isPair=false;
-        if(!found){
-          found = pairs.find(x=>x.bib===bib);
-          isPair = !!found;
-        }
-        if(!found){
-          detailHeader.textContent=`No se encontró el BIB ${bib}`;
+        let athlete = athletesDB.find((a) => a.bib === bib);
+        if (!athlete) {
+          detailHeader.textContent = `No se encontró el BIB ${bib}`;
           return;
         }
-        if(!isPair){
-          detailHeader.textContent = `Detalle del Atleta BIB: ${found.bib} - ${found.name}`;
-          const splits=[
-            {segment:"Salida - 1km", time:"05:00"},
-            {segment:"1km - 2km", time:"05:10"},
-            {segment:"2km - 3km", time:"05:20"},
-            {segment:"3km - 4km", time:"05:25"},
-            {segment:"4km - Meta", time:"05:30"},
+        if (athlete.type === "individual") {
+          detailHeader.textContent = `Detalle del Atleta BIB: ${athlete.bib || "-"} - ${athlete.name}`;
+          const splits = [
+            { segment: "Salida - 1km", time: "05:00" },
+            { segment: "1km - 2km", time: "05:10" },
+            { segment: "2km - 3km", time: "05:20" },
+            { segment: "3km - 4km", time: "05:25" },
+            { segment: "4km - Meta", time: "05:30" }
           ];
-          splits.forEach(s=>{
-            const tr=document.createElement("tr");
-            tr.innerHTML=`<td>${s.segment}</td><td>${s.time}</td>`;
+          splits.forEach((s) => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${s.segment}</td><td>${s.time}</td>`;
             detailTableBody.appendChild(tr);
           });
         } else {
-          detailHeader.textContent = `Detalle de la Pareja BIB: ${found.bib} - ${found.name1} & ${found.name2}`;
-          const splits=[
-            {segment:"Salida - 1km", time:"06:00"},
-            {segment:"1km - 2km", time:"06:15"},
-            {segment:"2km - 3km", time:"06:25"},
-            {segment:"3km - 4km", time:"06:30"},
-            {segment:"4km - Meta", time:"06:45"},
+          detailHeader.textContent = `Detalle de la Pareja BIB: ${athlete.bib || "-"} - ${athlete.name1} & ${athlete.name2}`;
+          const splits = [
+            { segment: "Salida - 1km", time: "06:00" },
+            { segment: "1km - 2km", time: "06:15" },
+            { segment: "2km - 3km", time: "06:25" },
+            { segment: "3km - 4km", time: "06:30" },
+            { segment: "4km - Meta", time: "06:45" }
           ];
-          splits.forEach(s=>{
-            const tr=document.createElement("tr");
-            tr.innerHTML=`<td>${s.segment}</td><td>${s.time}</td>`;
+          splits.forEach((s) => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${s.segment}</td><td>${s.time}</td>`;
             detailTableBody.appendChild(tr);
           });
         }
       }
-
     </script>
   </body>
 </html>
